@@ -1,13 +1,14 @@
 import { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
-import { LogIn } from 'lucide-react';
+import { LogIn, Loader2 } from 'lucide-react';
 
 export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,11 +26,15 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError(null);
     try {
       await login(username, password);
       navigate('/books');
     } catch (err) {
       setError('Invalid credentials');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -51,6 +56,7 @@ export default function Login() {
               value={username} 
               onChange={e => setUsername(e.target.value)} 
               required 
+              disabled={isLoading}
             />
           </div>
           <div className="form-group">
@@ -61,10 +67,26 @@ export default function Login() {
               value={password} 
               onChange={e => setPassword(e.target.value)} 
               required 
+              disabled={isLoading}
             />
           </div>
-          <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
-            <LogIn size={18} /> Login
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+            disabled={isLoading}
+          >
+            {isLoading ? (
+              <>
+                <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} />
+                Logging in...
+              </>
+            ) : (
+              <>
+                <LogIn size={18} />
+                Login
+              </>
+            )}
           </button>
         </form>
 
@@ -72,6 +94,13 @@ export default function Login() {
           Don't have an account? <Link to="/register" className="text-gradient" style={{ textDecoration: 'none', fontWeight: 'bold' }}>Register here</Link>
         </p>
       </div>
+
+      <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }

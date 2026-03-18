@@ -74,12 +74,13 @@ export default function Recommendations() {
       )}
 
       {loading ? (
-        <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '60px 20px', textAlign: 'center' }}>
-          <Sparkles className="text-gradient" size={48} style={{ animation: 'pulse 2s infinite', marginBottom: 20 }} />
-          
-          <p className="text-secondary mt-2">Our AI is fetching some perfect book matches for you!</p>
-        </div>
-      ) : (
+  <div style={{ marginTop: '24px' }}>  {/* ← add this wrapper */}
+    <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '60px 20px', textAlign: 'center' }}>
+      <Sparkles className="text-gradient" size={48} style={{ animation: 'pulse 2s infinite', marginBottom: 20 }} />
+      <p className="text-secondary mt-2">Our AI is fetching some perfect book matches for you!</p>
+    </div>
+  </div>
+) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '24px' }}>
           {recommendations.map((rec, index) => (
             <div key={index} className="glass-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', padding: '20px 24px' }}>

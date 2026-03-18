@@ -102,8 +102,8 @@ export default function BookList() {
           {filteredBooks.map(book => (
             <div key={book.id} className="glass-card" style={{ display: 'flex', flexDirection: 'column', minHeight: '200px', justifyContent: 'space-between' }}>
               <div className="flex gap-4 mb-4">
-                {book.cover_url ? (
-                  <img src={book.cover_url} alt={book.title} style={{ width: 80, height: 110, objectFit: 'cover', borderRadius: 6, flexShrink: 0 }} />
+                {book.cover_image || book.cover_url ? (
+                  <img src={book.cover_image || book.cover_url} alt={book.title} style={{ width: 80, height: 110, objectFit: 'cover', borderRadius: 6, flexShrink: 0 }} />
                 ) : (
                   <div style={{ width: 80, height: 110, background: 'rgba(255,255,255,0.05)', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <Book className="text-secondary" size={32} />

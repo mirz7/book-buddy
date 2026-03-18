@@ -15,6 +15,7 @@ class Book(models.Model):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='wishlist')
     isbn = models.CharField(max_length=20, blank=True, null=True)
     cover_url = models.URLField(max_length=500, blank=True, null=True)
+    cover_image = models.ImageField(upload_to='book_covers/', blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     total_pages = models.PositiveIntegerField(blank=True, null=True)
     pages_read = models.PositiveIntegerField(default=0)

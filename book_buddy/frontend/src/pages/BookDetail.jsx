@@ -167,9 +167,9 @@ export default function BookDetail() {
           <div className="glass-card">
             {/* Cover + meta row */}
             <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-              {book.cover_url ? (
+              {book.cover_image || book.cover_url ? (
                 <img
-                  src={book.cover_url}
+                  src={book.cover_image || book.cover_url}
                   alt={book.title}
                   style={{ width: 110, height: 165, objectFit: 'cover', borderRadius: 8, flexShrink: 0 }}
                 />

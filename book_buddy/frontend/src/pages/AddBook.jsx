@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Search, Save } from 'lucide-react';
+import { Search, Save, Image, Upload, X } from 'lucide-react';
 import api from '../api';
 
 export default function AddBook() {
@@ -19,6 +19,9 @@ export default function AddBook() {
     cover_url: '',
     total_pages: '',
   });
+  const [coverFile, setCoverFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [uploadMode, setUploadMode] = useState('url'); // 'url' or 'file'
 
   useEffect(() => {
     if (location.state && location.state.autoFillBook) {
@@ -67,14 +70,43 @@ export default function AddBook() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setCoverFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
+      setUploadMode('file');
+      setFormData(prev => ({ ...prev, cover_url: '' })); // Clear URL if file is selected
+    }
+  };
+
+  const clearFile = () => {
+    setCoverFile(null);
+    setPreviewUrl(null);
+    setUploadMode('url');
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
-      const dataToSubmit = { ...formData };
-      if (!dataToSubmit.total_pages) delete dataToSubmit.total_pages; // prevent empty string error
-      const res = await api.post('books/', dataToSubmit);
-      localStorage.setItem('book_buddy_recs_stale', 'true'); // Mark recs as stale instead of deleting them
+      const data = new FormData();
+      Object.keys(formData).forEach(key => {
+        if (formData[key] !== '' && formData[key] !== null) {
+          data.append(key, formData[key]);
+        }
+      });
+      
+      if (coverFile) {
+        data.append('cover_image', coverFile);
+      }
+
+      const res = await api.post('books/', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      localStorage.setItem('book_buddy_recs_stale', 'true');
       navigate(`/books/${res.data.id}`);
     } catch (err) {
       setError('Failed to save book. Please check required fields.');
@@ -133,9 +165,75 @@ export default function AddBook() {
               </select>
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Cover Image URL</label>
-              <input type="url" className="form-control" name="cover_url" value={formData.cover_url} onChange={handleChange} />
+            <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+              <label className="form-label">Cover Image</label>
+              <div className="glass-card" style={{ padding: '20px', background: 'rgba(255,255,255,0.03)', border: '1px dashed rgba(255,255,255,0.1)' }}>
+                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
+                  {/* Preview Area */}
+                  <div style={{ 
+                    width: 100, 
+                    height: 140, 
+                    background: 'rgba(255,255,255,0.05)', 
+                    borderRadius: 8, 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    overflow: 'hidden',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    flexShrink: 0
+                  }}>
+                    {previewUrl || formData.cover_url ? (
+                      <img src={previewUrl || formData.cover_url} alt="Cover Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      <Image size={32} className="text-secondary" />
+                    )}
+                  </div>
+
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
+                      <button 
+                        type="button" 
+                        className={`btn btn-sm ${uploadMode === 'url' ? 'btn-primary' : 'btn-secondary'}`}
+                        onClick={() => setUploadMode('url')}
+                      >
+                        Image URL
+                      </button>
+                      <button 
+                        type="button" 
+                        className={`btn btn-sm ${uploadMode === 'file' ? 'btn-primary' : 'btn-secondary'}`}
+                        onClick={() => setUploadMode('file')}
+                      >
+                        Upload File
+                      </button>
+                    </div>
+
+                    {uploadMode === 'url' ? (
+                      <input 
+                        type="url" 
+                        className="form-control" 
+                        name="cover_url" 
+                        placeholder="https://example.com/image.jpg"
+                        value={formData.cover_url} 
+                        onChange={handleChange} 
+                      />
+                    ) : (
+                      <div className="flex gap-2 items-center">
+                        <label className="btn btn-secondary flex items-center gap-2 cursor-pointer" style={{ margin: 0 }}>
+                          <Upload size={16} /> Choose Image
+                          <input type="file" style={{ display: 'none' }} onChange={handleFileChange} accept="image/*" />
+                        </label>
+                        {coverFile && (
+                          <div className="flex items-center gap-2 text-sm text-secondary">
+                            <span>{coverFile.name}</span>
+                            <button type="button" onClick={clearFile} className="text-danger p-1"><X size={14} /></button>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    <p className="text-sm text-secondary mt-2">Recommended size: 300x450px. Max 2MB.</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="form-group">
