@@ -140,109 +140,125 @@ export default function AddBook() {
 
       <div className="glass-card">
         <form onSubmit={handleSubmit}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-            <div className="form-group">
-              <label className="form-label">Title *</label>
-              <input type="text" className="form-control" name="title" value={formData.title} onChange={handleChange} required />
-            </div>
-            
-            <div className="form-group">
-              <label className="form-label">Author *</label>
-              <input type="text" className="form-control" name="author" value={formData.author} onChange={handleChange} required />
-            </div>
+          {/* Two-column layout: left = text fields, right = cover image */}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, alignItems: 'start' }}>
 
-            <div className="form-group">
-              <label className="form-label">Genre</label>
-              <input type="text" className="form-control" name="genre" value={formData.genre} onChange={handleChange} />
-            </div>
-            
-            <div className="form-group">
-              <label className="form-label">Reading Status</label>
-              <select className="form-control" name="status" value={formData.status} onChange={handleChange}>
-                <option value="wishlist">Wishlist</option>
-                <option value="reading">Currently Reading</option>
-                <option value="completed">Completed</option>
-              </select>
-            </div>
+            {/* LEFT COLUMN — all text inputs */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+              <div className="form-group" style={{ margin: 0 }}>
+                <label className="form-label">Title *</label>
+                <input type="text" className="form-control" name="title" value={formData.title} onChange={handleChange} required />
+              </div>
 
-            <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-              <label className="form-label">Cover Image</label>
-              <div className="glass-card" style={{ padding: '20px', background: 'rgba(255,255,255,0.03)', border: '1px dashed rgba(255,255,255,0.1)' }}>
-                <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-                  {/* Preview Area */}
-                  <div style={{ 
-                    width: 100, 
-                    height: 140, 
-                    background: 'rgba(255,255,255,0.05)', 
-                    borderRadius: 8, 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center',
-                    overflow: 'hidden',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    flexShrink: 0
-                  }}>
-                    {previewUrl || formData.cover_url ? (
-                      <img src={previewUrl || formData.cover_url} alt="Cover Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                    ) : (
-                      <Image size={32} className="text-secondary" />
-                    )}
-                  </div>
+              <div className="form-group" style={{ margin: 0 }}>
+                <label className="form-label">Author *</label>
+                <input type="text" className="form-control" name="author" value={formData.author} onChange={handleChange} required />
+              </div>
 
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', gap: '8px', marginBottom: '12px' }}>
-                      <button 
-                        type="button" 
-                        className={`btn btn-sm ${uploadMode === 'url' ? 'btn-primary' : 'btn-secondary'}`}
-                        onClick={() => setUploadMode('url')}
-                      >
-                        Image URL
-                      </button>
-                      <button 
-                        type="button" 
-                        className={`btn btn-sm ${uploadMode === 'file' ? 'btn-primary' : 'btn-secondary'}`}
-                        onClick={() => setUploadMode('file')}
-                      >
-                        Upload File
-                      </button>
-                    </div>
+              <div className="form-group" style={{ margin: 0 }}>
+                <label className="form-label">Genre</label>
+                <input type="text" className="form-control" name="genre" value={formData.genre} onChange={handleChange} />
+              </div>
 
-                    {uploadMode === 'url' ? (
-                      <input 
-                        type="url" 
-                        className="form-control" 
-                        name="cover_url" 
-                        placeholder="https://example.com/image.jpg"
-                        value={formData.cover_url} 
-                        onChange={handleChange} 
-                      />
-                    ) : (
-                      <div className="flex gap-2 items-center">
-                        <label className="btn btn-secondary flex items-center gap-2 cursor-pointer" style={{ margin: 0 }}>
-                          <Upload size={16} /> Choose Image
-                          <input type="file" style={{ display: 'none' }} onChange={handleFileChange} accept="image/*" />
-                        </label>
-                        {coverFile && (
-                          <div className="flex items-center gap-2 text-sm text-secondary">
-                            <span>{coverFile.name}</span>
-                            <button type="button" onClick={clearFile} className="text-danger p-1"><X size={14} /></button>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                    <p className="text-sm text-secondary mt-2">Recommended size: 300x450px. Max 2MB.</p>
-                  </div>
-                </div>
+              <div className="form-group" style={{ margin: 0 }}>
+                <label className="form-label">Reading Status</label>
+                <select className="form-control" name="status" value={formData.status} onChange={handleChange}>
+                  <option value="wishlist">Wishlist</option>
+                  <option value="reading">Currently Reading</option>
+                  <option value="completed">Completed</option>
+                </select>
+              </div>
+
+              <div className="form-group" style={{ margin: 0 }}>
+                <label className="form-label">Total Pages</label>
+                <input type="number" className="form-control" name="total_pages" value={formData.total_pages} onChange={handleChange} />
               </div>
             </div>
 
-            <div className="form-group">
-              <label className="form-label">Total Pages</label>
-              <input type="number" className="form-control" name="total_pages" value={formData.total_pages} onChange={handleChange} />
+            {/* RIGHT COLUMN — cover image upload */}
+            <div className="form-group" style={{ margin: 0 }}>
+              <label className="form-label">Cover Image</label>
+              <div style={{
+                padding: '24px',
+                borderRadius: 12,
+                border: '1px dashed rgba(0,0,0,0.15)',
+                background: 'rgba(0,0,0,0.02)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 20,
+              }}>
+                {/* Preview */}
+                <div style={{
+                  width: 120,
+                  height: 168,
+                  borderRadius: 8,
+                  overflow: 'hidden',
+                  border: '1px solid rgba(0,0,0,0.1)',
+                  background: 'rgba(0,0,0,0.04)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0,
+                }}>
+                  {previewUrl || formData.cover_url ? (
+                    <img src={previewUrl || formData.cover_url} alt="Cover Preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <Image size={40} style={{ opacity: 0.3 }} />
+                  )}
+                </div>
+
+                {/* Mode toggle */}
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <button
+                    type="button"
+                    className={`btn btn-sm ${uploadMode === 'url' ? 'btn-primary' : 'btn-secondary'}`}
+                    onClick={() => setUploadMode('url')}
+                  >
+                    Image URL
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn btn-sm ${uploadMode === 'file' ? 'btn-primary' : 'btn-secondary'}`}
+                    onClick={() => setUploadMode('file')}
+                  >
+                    Upload File
+                  </button>
+                </div>
+
+                {/* Input */}
+                <div style={{ width: '100%' }}>
+                  {uploadMode === 'url' ? (
+                    <input
+                      type="url"
+                      className="form-control"
+                      name="cover_url"
+                      placeholder="https://example.com/cover.jpg"
+                      value={formData.cover_url}
+                      onChange={handleChange}
+                    />
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10 }}>
+                      <label className="btn btn-secondary flex items-center gap-2 cursor-pointer" style={{ margin: 0, width: '100%', justifyContent: 'center' }}>
+                        <Upload size={16} /> Choose Image
+                        <input type="file" style={{ display: 'none' }} onChange={handleFileChange} accept="image/*" />
+                      </label>
+                      {coverFile && (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, opacity: 0.7 }}>
+                          <span style={{ maxWidth: 160, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{coverFile.name}</span>
+                          <button type="button" onClick={clearFile} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--danger)', padding: 2 }}><X size={14} /></button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+                <p style={{ fontSize: 12, opacity: 0.5, margin: 0, textAlign: 'center' }}>Recommended: 300×450px · Max 2MB</p>
+              </div>
             </div>
           </div>
-          
-          <div className="form-group mt-2">
+
+          {/* Description - full width below */}
+          <div className="form-group" style={{ marginTop: 24 }}>
             <label className="form-label">Description / Synopsis</label>
             <textarea className="form-control" name="description" value={formData.description} onChange={handleChange} rows="4" />
           </div>

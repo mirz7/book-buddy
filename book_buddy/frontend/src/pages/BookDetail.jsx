@@ -60,29 +60,36 @@ export default function BookDetail() {
 
   const handleUpdateProgress = async (e) => {
     e.preventDefault();
-    try {
-      const updatedBook = { ...book, pages_read: parseInt(pagesRead) };
-      if (book.total_pages && parseInt(pagesRead) >= book.total_pages) {
-        updatedBook.status = 'completed';
-      }
-      await api.patch(`books/${id}/`, updatedBook);
+    const newPages = parseInt(pagesRead);
+    if (isNaN(newPages) || newPages < 0) return;
 
+    try {
+      // Only PATCH the fields that are changing — sending the full book object
+      // breaks multipart validation because cover_image would be a URL string not a file.
+      const patchData = { pages_read: newPages };
+      if (book.total_pages && newPages >= book.total_pages) {
+        patchData.status = 'completed';
+      }
+      await api.patch(`books/${id}/`, patchData);
+
+      // Record a reading session for pages read this sitting
       const lastPagesRead = book.pages_read || 0;
-      if (parseInt(pagesRead) > lastPagesRead) {
+      if (newPages > lastPagesRead) {
         await api.post('sessions/', {
-          book: id,
-          pages_read: parseInt(pagesRead) - lastPagesRead
+          book: parseInt(id),
+          pages_read: newPages - lastPagesRead,
         });
       }
 
+      // Always append a history checkpoint
       await api.post('history/', {
-        book: id,
-        page_number: parseInt(pagesRead)
+        book: parseInt(id),
+        page_number: newPages,
       });
 
       fetchBookData();
     } catch (err) {
-      console.error(err);
+      console.error('Progress update failed:', err.response?.data || err.message);
     }
   };
 
@@ -167,9 +174,9 @@ export default function BookDetail() {
           <div className="glass-card">
             {/* Cover + meta row */}
             <div style={{ display: 'flex', gap: '20px', alignItems: 'flex-start' }}>
-              {book.cover_image || book.cover_url ? (
+              {book.cover_image_url || book.cover_url ? (
                 <img
-                  src={book.cover_image || book.cover_url}
+                  src={book.cover_image_url || book.cover_url}
                   alt={book.title}
                   style={{ width: 110, height: 165, objectFit: 'cover', borderRadius: 8, flexShrink: 0 }}
                 />
