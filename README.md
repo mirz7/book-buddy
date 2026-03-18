@@ -6,9 +6,9 @@
 
 ## 🌐 Live Demo — Try It Out
 
-👉 **[https://my-book-buddy-gi34.onrender.com](https://my-book-buddy-gi34.onrender.com)**
+> **[https://my-book-buddy-gi34.onrender.com](https://my-book-buddy-gi34.onrender.com)**
 
-> ⚠️ *Hosted on Render's free tier — the first load may take 30–60 seconds to spin up. Please be patient!*
+ ⚠️ *Hosted on Render's free tier — the first load may take 30–60 seconds to spin up. Please be patient!*
 
 ---
 
