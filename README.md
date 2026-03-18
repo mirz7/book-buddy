@@ -1,6 +1,6 @@
 # Book Buddy 📚
 
-**Book Buddy** is a comprehensive full-stack application built for tracking reading progress. Developed as a technical submission for a software engineering role, it showcases a modern full-stack architecture with integrated AI capabilities.
+**Book Buddy** is a comprehensive full-stack application built for tracking reading progress, built as a coding task submission for a Full Stack Developer intern role at SayOne Technologies.
 
 ---
 
