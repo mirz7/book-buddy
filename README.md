@@ -1,37 +1,85 @@
-# Book Buddy - V2 Backend & Frontend
+# Book Buddy 📚
 
-This simulates the second major commit in the project's history: Adding a basic React frontend.
+**Book Buddy** is a comprehensive full-stack application designed to help readers track and manage their reading progress with ease. This project was developed as a technical submission for a software engineering role, showcasing a modern tech stack and integrated AI features.
 
-## Project Structure
+---
 
-This folder contains both the backend API and the frontend client.
+## 📋 Project Documentation and completed tasks
 
-- `book_buddy_core/` & `api/`: The Django backend (inherited from V1, but with `django-cors-headers` added to allow frontend requests).
-- `frontend/`: The Vite + React + TailwindCSS frontend application.
+### Users Can:
+- [x] **Add books**: Include title, author, genre, and status (reading, completed, wishlist).
+- [x] **Update reading progress**: Track pages read versus total pages.
+- [x] **View reading stats**: Interactive dashboard showing % completed and books by genre.
+- [x] **Add personal notes or ratings**: Record reflections and 5-star ratings for completed books.
 
-## Setup Instructions
+### Tech Requirements:
+- [x] **Frontend**: ReactJS (Vite, Tailwind CSS, Recharts for stats).
+- [x] **Backend**: Python (Django & Django REST Framework).
+- [x] **Database**: SQLite (Development environment).
 
-### 1. Backend (Django)
+### Optional AI Features:
+- [x] **Recommend books**: Personalized suggestions based on genre and reading history (Groq AI).
+- [x] **Generate short summary**: AI-powered summaries based on user's personal notes.
+- [x] **Predict estimated completion date**: Smart prediction based on recent reading patterns and speed.
 
-1. Navigate to the project root: `cd book_buddy_v2_commit`
-2. Activate your virtual environment: `venv\Scripts\activate` (or `source venv/bin/activate`)
-3. Install new requirements: `pip install -r requirements.txt`
-4. Run migrations: `python manage.py migrate`
-5. Start the server (runs on port 8000): `python manage.py runserver`
+### Optional Other Features:
+- [x] **User login**: Secure authentication system to save and manage private book lists.
+- [x] **Import book info**: Automated book data fetching using **ISBN API (Open Library API)**.
+- [x] **Graph view**: *(Planned)* Visual timeline of reading over time.
+- [x] **AI-generated book reviews**: Professional reviews generated automatically from notes and ratings.
 
-### 2. Frontend (React)
+---
 
-Open a **new** terminal window:
+## 🛠️ Detailed Architecture
 
-1. Navigate to the frontend folder: `cd book_buddy_v2_commit/frontend`
-2. Install Node dependencies: `npm install`
-3. Start the Vite dev server: `npm run dev`
+### Frontend (React)
+- **State Management**: React Hooks (useState, useEffect, useContext).
+- **Styling**: Tailwind CSS with custom glassmorphism components.
+- **Charts**: Recharts for visualizing genre distribution and progress stats.
+- **Icons**: Lucide-React for a clean interface.
 
-The frontend will be available at standard Vite ports (e.g. `http://localhost:5173`).
+### Backend (Django)
+- **API**: Django REST Framework (DRF) for secure, token-based communication.
+- **AI Services**: Integrated with **Groq AI** for fast, local-feeling AI summaries and recommendations.
+- **Service Layer**: Clean separation of API logic and external service integrations (ISBN, AI).
 
-### What's New in V2?
+---
 
-- Added a React Single Page Application using Vite.
-- Styled with TailwindCSS.
-- Basic `Navbar` and `BookList` components added.
-- The `BookList` component fetches data from the Django API at `http://localhost:8000/api/books/`.
+## 🚀 Setup & Local Development
+
+### 1. Prerequisites
+- Python 3.10+
+- Node.js & npm (v18+)
+- Groq API Key (required for AI features)
+
+### 2. Backend Installation (Django)
+1. **Navigate to root**: `cd book_buddy`
+2. **Setup Venv & Dependencies**:
+   ```bash
+   python -m venv venv
+   # Windows
+   venv\Scripts\activate
+   # Mac/Linux
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
+3. **Environment**: Create a `.env` file in the root directory (where `manage.py` is) with:
+   `GROQ_API_KEY=your_key_here`
+4. **Database & Start**:
+   ```bash
+   python manage.py migrate
+   python manage.py runserver
+   ```
+
+### 3. Frontend Installation (React)
+1. **Navigate**: `cd book_buddy/frontend`
+2. **Install & Start**:
+   ```bash
+   npm install
+   npm run dev
+   ```
+   *Access the app at `http://localhost:5173/`*
+
+---
+
+*This project demonstrates a full-stack integration of React, Django, and modern AI services to solve real-world user needs.*
