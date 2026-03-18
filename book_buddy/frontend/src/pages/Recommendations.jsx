@@ -7,6 +7,7 @@ export default function Recommendations() {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [hasBooks, setHasBooks] = useState(null); // null = unknown yet
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,7 +17,7 @@ export default function Recommendations() {
     if (cachedRecs) {
       const parsed = JSON.parse(cachedRecs);
       setRecommendations(parsed);
-      
+
       if (isStale) {
         setLoading(true);
         fetchRecommendations(parsed);
@@ -26,26 +27,37 @@ export default function Recommendations() {
     } else {
       fetchRecommendations([]);
     }
+
+    fetchBookCount();
   }, []);
+
+  const fetchBookCount = async () => {
+    try {
+      const res = await api.get('books/');
+      const books = res.data?.results ?? res.data ?? [];
+      setHasBooks(books.length > 0);
+    } catch (err) {
+      console.error('Failed to fetch book count:', err);
+      setHasBooks(false);
+    }
+  };
 
   const fetchRecommendations = async (existingRecs = []) => {
     try {
       const res = await api.get('books/recommendations/');
       const recs = res.data.recommendations || [];
-      if (recs && recs.length > 0 && recs[0].title !== "API Error") {
+      if (recs && recs.length > 0 && recs[0].title !== 'API Error') {
         setRecommendations(recs);
         localStorage.setItem('book_buddy_recs', JSON.stringify(recs));
         localStorage.removeItem('book_buddy_recs_stale');
         setError(null);
       } else if (existingRecs.length === 0) {
-        setError("AI could not generate valid recommendations at this time.");
+        setError('AI could not generate valid recommendations at this time.');
       }
-      // If error occurs but we have existingRecs, we simply do not set the error
-      // and keep the UI filled with the old recommendations!
     } catch (err) {
       console.error(err);
       if (existingRecs.length === 0) {
-        setError("Failed to fetch AI recommendations. Please check your connection.");
+        setError('Failed to fetch AI recommendations. Please check your connection.');
       }
     } finally {
       setLoading(false);
@@ -53,18 +65,19 @@ export default function Recommendations() {
   };
 
   const handleAddBook = (bookData) => {
-    // Navigate to AddBook page, passing the recommended book data via state
     navigate('/books/add', { state: { autoFillBook: bookData } });
   };
 
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
-        
         <h1 style={{ fontSize: '28px', fontWeight: 800, color: '#1A1A1A' }}>AI Recommendations</h1>
       </div>
+
       <p className="text-secondary mb-6" style={{ fontSize: '1.1rem' }}>
-        Based on your likings and the world's most famous, most accepted picks — discover titles you'll love…
+        {hasBooks === false
+          ? "You have zero books added, so we're recommending the world's top books for you to explore."
+          : "AI Recommend books based on intrested genre, summary,and past reading — discover titles you'll love…"}
       </p>
 
       {error && recommendations.length === 0 && (
@@ -74,13 +87,13 @@ export default function Recommendations() {
       )}
 
       {loading ? (
-  <div style={{ marginTop: '24px' }}>  {/* ← add this wrapper */}
-    <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '60px 20px', textAlign: 'center' }}>
-      <Sparkles className="text-gradient" size={48} style={{ animation: 'pulse 2s infinite', marginBottom: 20 }} />
-      <p className="text-secondary mt-2">Our AI is fetching some perfect book matches for you!</p>
-    </div>
-  </div>
-) : (
+        <div style={{ marginTop: '24px' }}>
+          <div className="glass-card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '60px 20px', textAlign: 'center' }}>
+            <Sparkles className="text-gradient" size={48} style={{ animation: 'pulse 2s infinite', marginBottom: 20 }} />
+            <p className="text-secondary mt-2">Our AI is fetching some perfect book matches for you!</p>
+          </div>
+        </div>
+      ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '24px' }}>
           {recommendations.map((rec, index) => (
             <div key={index} className="glass-card" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', padding: '20px 24px' }}>
@@ -97,8 +110,8 @@ export default function Recommendations() {
                   </p>
                 )}
               </div>
-              <button 
-                className="btn btn-primary" 
+              <button
+                className="btn btn-primary"
                 style={{ flexShrink: 0, padding: '10px 18px', borderRadius: 8 }}
                 onClick={() => handleAddBook(rec)}
               >
@@ -108,9 +121,9 @@ export default function Recommendations() {
           ))}
 
           {recommendations.length === 0 && !loading && !error && (
-             <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: 40 }} className="text-secondary glass-card">
-               We couldn't generate recommendations at this time.
-             </div>
+            <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: 40 }} className="text-secondary glass-card">
+              We couldn't generate recommendations at this time.
+            </div>
           )}
         </div>
       )}
