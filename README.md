@@ -1,12 +1,10 @@
 # Book Buddy 📚
 
-**Book Buddy** is a comprehensive full-stack application designed to help readers track and manage their reading progress with ease. This project was developed as a technical submission for a software engineering role, showcasing a modern tech stack and integrated AI features.
+**Book Buddy** is a comprehensive full-stack application built for tracking reading progress. Developed as a technical submission for a software engineering role, it showcases a modern full-stack architecture with integrated AI capabilities.
 
 ---
 
-## 🌐 Live Experience
-
-> **Try it out**
+## 🌐 Live Demo — Try It Out
 
 👉 **[https://my-book-buddy-gi34.onrender.com](https://my-book-buddy-gi34.onrender.com)**
 
@@ -18,94 +16,138 @@
 
 > A short walkthrough of Book Buddy's core features — adding books, tracking progress, and using AI recommendations.
 
-<!-- Replace the src below with your actual video embed URL (YouTube, Loom, etc.) -->
 
-[![Book Buddy Demo](https://img.shields.io/badge/Watch%20Demo-Click%20Here-red?style=for-the-badge&logo=youtube)](https://your-video-link-here)
 
-> 📌 *To add your video: upload a demo to YouTube or Loom and replace the link above. You can also embed it directly with an `<iframe>` if hosting on GitHub Pages or a docs site.*
 
 ---
 
-## 📋 Task List & Completed Features
+## ✅ Codind Task Requirements — Completion Status
 
-### Users Can:
-- [x] **Add books**: Include title, author, genre, and status (reading, completed, wishlist).
-- [x] **Update reading progress**: Track pages read versus total pages.
-- [x] **View reading stats**: Interactive dashboard showing % completed and books by genre.
-- [x] **Add personal notes or ratings**: Record reflections and 5-star ratings for completed books.
+> All requirements from the original task have been completed.
 
-### Tech Requirements:
-- [x] **Frontend**: ReactJS (Vite, Tailwind CSS, Recharts for stats).
-- [x] **Backend**: Python (Django & Django REST Framework).
-- [x] **Database**: SQLite (Development environment).
+### 📌 Core Task
+Build an app for tracking reading progress.
 
-### Optional AI Features:
-- [x] **Recommend books**: Personalized suggestions based on genre and reading history (Groq AI).
-- [x] **Generate short summary**: AI-powered summaries based on user's personal notes.
-- [x] **Predict estimated completion date**: Smart prediction based on recent reading patterns and speed.
+### 👤 Users Can:
+- ✅ Add books with title, author, genre, and status *(reading, completed, wishlist)*
+- ✅ Update reading progress
+- ✅ View reading stats *(e.g. % completed, books by genre)*
+- ✅ Add personal notes or ratings for completed books
 
-### Optional Other Features:
-- [x] **User login**: Secure authentication system to save and manage private book lists.
-- [x] **Import book info**: Automated book data fetching using **ISBN API (Open Library API)**.
-- [x] **Graph view**: Visual timeline of reading over time.
-- [x] **AI-generated book reviews**: Professional reviews generated automatically from notes and ratings.
+### ⚙️ Tech Requirements:
+- ✅ **Frontend**: ReactJS *(form inputs, reading list view, stats)*
+- ✅ **Backend**: Python *(Django / FastAPI)*
+- ✅ **Database**: SQLite or PostgreSQL
 
----
+### 🤖 Optional AI Feature:
+- ✅ Recommend books based on genre, summary, or past reading
+- ✅ Generate a short summary based on user notes
+- ✅ Predict estimated completion date based on reading pattern
 
-## 🛠️ Detailed Architecture
-
-### Frontend (React)
-- **State Management**: React Hooks (`useState`, `useEffect`, `useContext`).
-- **Styling**: Tailwind CSS with custom glassmorphism components.
-- **Charts**: Recharts for visualizing genre distribution and progress stats.
-- **Icons**: Lucide-React for a clean interface.
-
-### Backend (Django)
-- **API**: Django REST Framework (DRF) for secure, token-based communication.
-- **AI Services**: Integrated with **Groq AI** for fast, local-feeling AI summaries and recommendations.
-- **Service Layer**: Clean separation of API logic and external service integrations (ISBN, AI).
+### 🌟 Optional Other Features:
+- ✅ Deployment
+- ✅ Add user login to save private book lists
+- ✅ Import book info using ISBN API *(e.g. Open Library API)*
+- ✅ Graph view of reading over time
+- ✅ AI-generated book reviews based on notes and ratings
 
 ---
 
-## 🚀 Setup & Local Development
+## 🔍 Features — In Detail
 
-### 1. Prerequisites
+### 📚 Book Management
+Add and manage your entire reading library in one place. Each book entry supports a **title, author, genre**, and a **status tag** — *Reading*, *Completed*, or *Wishlist*. Books can be imported automatically by entering an **ISBN**, pulling metadata instantly from the **Open Library API**, saving manual entry time.
+
+### 📈 Reading Progress Tracker
+Log how many pages you've read against the total page count for any book. The app calculates and displays a **live completion percentage**, giving you a clear snapshot of where you stand with each title.
+
+### 📊 Stats Dashboard
+An interactive dashboard visualizes your reading habits at a glance:
+- **Genre distribution** — pie/bar chart of books by category
+- **Progress overview** — completion percentages across all active reads
+- **Reading timeline** — graph view showing your reading activity over time
+
+Built with **Recharts** for smooth, responsive data visualization.
+
+### 📝 Notes & Ratings
+For completed books, add **personal reflections and a 5-star rating**. These notes also power the AI features — summaries and reviews are generated directly from what you write.
+
+### 🤖 AI Features *(powered by Groq)*
+
+| Feature | Description |
+|---|---|
+| **Book Recommendations** | Suggests new books based on your genre preferences and reading history |
+| **Note Summarizer** | Condenses your personal notes into a clean, readable summary |
+| **Completion Predictor** | Estimates a finish date based on your recent reading speed and pace |
+| **AI Book Reviews** | Generates a professional-style review from your notes and star rating |
+
+All AI features run through **Groq's inference API** — fast responses with no noticeable latency.
+
+### 🔐 User Authentication
+Secure **token-based login system** built with Django REST Framework. Each user's book list, notes, and progress data are private and tied to their account.
+
+### 🗃️ Clean Service Architecture
+The backend follows a clear separation of concerns:
+- **API layer** — DRF ViewSets handle all REST endpoints
+- **Service layer** — AI and ISBN integrations are isolated in dedicated service modules, keeping views clean and testable
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React (Vite), Tailwind CSS, Recharts, Lucide Icons |
+| Backend | Python, Django, Django REST Framework |
+| Database | SQLite *(dev)* |
+| AI | Groq API |
+| Book Data | Open Library ISBN API |
+| Auth | DRF Token Authentication |
+| Hosting | Render |
+
+---
+
+## 🚀 Local Development Setup
+
+### Prerequisites
 - Python 3.10+
 - Node.js & npm (v18+)
-- Groq API Key (required for AI features)
+- Groq API Key
 
-### 2. Backend Installation (Django)
+### Backend (Django)
 
-1. **Navigate to root**: `cd book_buddy`
-2. **Setup Venv & Dependencies**:
-   ```bash
-   python -m venv venv
-   # Windows
-   venv\Scripts\activate
-   # Mac/Linux
-   source venv/bin/activate
-   pip install -r requirements.txt
-   ```
-3. **Environment**: Create a `.env` file in the root directory (where `manage.py` is) with:
-   ```
-   GROQ_API_KEY=your_key_here
-   ```
-4. **Database & Start**:
-   ```bash
-   python manage.py migrate
-   python manage.py runserver
-   ```
+```bash
+cd book_buddy
+python -m venv venv
 
-### 3. Frontend Installation (React)
+# Windows
+venv\Scripts\activate
+# Mac/Linux
+source venv/bin/activate
 
-1. **Navigate**: `cd book_buddy/frontend`
-2. **Install & Start**:
-   ```bash
-   npm install
-   npm run dev
-   ```
-   *Access the app at `http://localhost:5173/`*
+pip install -r requirements.txt
+```
+
+Create a `.env` file in the root directory (alongside `manage.py`):
+```
+GROQ_API_KEY=your_key_here
+```
+
+```bash
+python manage.py migrate
+python manage.py runserver
+```
+
+### Frontend (React)
+
+```bash
+cd book_buddy/frontend
+npm install
+npm run dev
+```
+
+Access the app at **`http://localhost:5173/`**
 
 ---
 
-*This project demonstrates a full-stack integration of React, Django, and modern AI services to solve real-world user needs.*
+*This project demonstrates a production-minded full-stack integration of React, Django, and modern AI services — built to solve a real, everyday user need.*
