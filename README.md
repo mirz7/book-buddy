@@ -1,6 +1,6 @@
 # Book Buddy 📚
 
-**Book Buddy** is a full-stack application for tracking reading progress, built as a coding task submission for a Full Stack Developer role at SayOne Technologies.
+*Book Buddy* is a full-stack app for tracking your reading journey 🌟. Built as a coding task for SayOne Technologies' Full Stack Developer intern role. Want to know more about its features or tech stack?
 
 ---
 
