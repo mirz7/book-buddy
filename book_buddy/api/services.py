@@ -76,7 +76,7 @@ def generate_recommendations(user):
         context_line = (
             f"This reader is just getting started — they have only read: {avoid_hint}. "
             "Because their library is small, cast a wide net and suggest highly acclaimed, "
-            "accessible books across very different genres to help them discover what they love."
+            "accessible books 2 same genre and 3 different genres to help them discover what they love."
         )
     else:
         context_line = (
@@ -89,7 +89,7 @@ def generate_recommendations(user):
         client = get_ai_client()
         prompt = (
             f"Recommend 5 books for a reader who enjoys: {genre_hint}. "
-            "IMPORTANT: The 5 recommendations MUST span at least 3 different genres — "
+            "IMPORTANT: The 5 recommendations MUST span at least 3 same and 2 different genres — "
             "do not cluster them all in one genre. Mix literary fiction, thriller, sci-fi, "
             "history, self-help, fantasy, mystery, or similar. "
             f"{context_line} "
