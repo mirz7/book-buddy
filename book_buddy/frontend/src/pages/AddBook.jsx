@@ -7,6 +7,7 @@ export default function AddBook() {
   const [isbn, setIsbn] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [notice, setNotice] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,8 +29,8 @@ export default function AddBook() {
       const book = location.state.autoFillBook;
       if (book.isbn) {
         setIsbn(book.isbn);
-        // Automatically trigger the import if arriving from recommendations with an ISBN
-        performIsbnImport(book.isbn);
+        // Automatically trigger the import; pass the book as fallback in case ISBN lookup fails
+        performIsbnImport(book.isbn, book);
       } else {
         setFormData(prev => ({
           ...prev,
@@ -43,10 +44,11 @@ export default function AddBook() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
-  const performIsbnImport = async (isbnToFetch) => {
+  const performIsbnImport = async (isbnToFetch, fallbackBook = null) => {
     if (!isbnToFetch) return;
     setLoading(true);
     setError(null);
+    setNotice(null);
     try {
       const res = await api.post('books/import_isbn/', { isbn: isbnToFetch });
       setFormData(prev => ({
@@ -55,7 +57,20 @@ export default function AddBook() {
         isbn: isbnToFetch
       }));
     } catch (err) {
-      setError('Could not fetch book details. Please enter manually.');
+      if (fallbackBook) {
+        // ISBN lookup failed — fall back to the recommendation data we already have
+        setFormData(prev => ({
+          ...prev,
+          title: fallbackBook.title || '',
+          author: fallbackBook.author || '',
+          genre: fallbackBook.genre || '',
+          description: fallbackBook.description || '',
+          isbn: isbnToFetch,
+        }));
+        setNotice('ISBN lookup issue — details from the recommendation have been pre-filled. You can edit them below.');
+      } else {
+        setError('Could not fetch book details. Please enter manually.');
+      }
     } finally {
       setLoading(false);
     }
@@ -137,6 +152,7 @@ export default function AddBook() {
       </div>
 
       {error && <div className="glass-card mb-4" style={{ borderColor: 'var(--danger)', color: 'var(--danger)', padding: 12 }}>{error}</div>}
+      {notice && <div className="glass-card mb-4" style={{ borderColor: '#3b82f6', color: '#1e3a8a', backgroundColor: '#eff6ff', padding: 12 }}>{notice}</div>}
 
       <div className="glass-card">
         <form onSubmit={handleSubmit}>
