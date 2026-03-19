@@ -10,7 +10,6 @@
 
  ⚠️ *Hosted on Render's free tier — the loading may cause delay. Please be patient!*
 
----
 
 ## 🎥 Video Preview
 https://github.com/user-attachments/assets/e556dca1-0f77-4e9b-8334-f723fcd5c5b9
