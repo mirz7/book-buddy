@@ -24,21 +24,21 @@ https://github.com/user-attachments/assets/e556dca1-0f77-4e9b-8334-f723fcd5c5b9
 
 > All requirements from the original task have been completed.
 
-### 📌 Core Task
+###  Core Task
 Build an app for tracking reading progress.
 
-### 👤 Users Can:
+###  Users Can:
 - ✅ Add books with title, author, genre,images and status *(reading, completed, wishlist)*
 - ✅ Update reading progress
 - ✅ View reading stats *(e.g. % completed, books by genre)*
 - ✅ Add personal notes or ratings for completed books
 
-### 🤖 Optional AI Feature:
+###  Optional AI Feature:
 - ✅ Recommend books based on genre, summary, or past reading
 - ✅ Generate a short summary based on user notes
 - ✅ Predict estimated completion date based on reading pattern
 
-### 🌟 Optional Other Features:
+###  Optional Other Features:
 - ✅ Deployment
 - ✅ Add user login to save private book lists
 - ✅ Import book info using ISBN API *(e.g. Open Library API)*
@@ -47,7 +47,7 @@ Build an app for tracking reading progress.
 
 ---
 
-## 🔍 Features — In Detail
+##  Features — In Detail
 
 ### 📚 Book Management
 Add and manage your entire reading library in one place. Each book entry supports a **title, author, genre**, and a **status tag** — *Reading*, *Completed*, or *Wishlist*. Books can be imported automatically by entering an **ISBN**, pulling metadata instantly from the **Open Library API**, saving manual entry time.
