@@ -20,7 +20,7 @@ https://github.com/user-attachments/assets/e556dca1-0f77-4e9b-8334-f723fcd5c5b9
 
 ---
 
-## ✅ Codind Task Requirements — Completion Status
+## ✅ Coding Task Requirements — Completion Status
 
 > All requirements from the original task have been completed.
 
