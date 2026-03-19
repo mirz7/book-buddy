@@ -8,11 +8,12 @@
 
 > **[https://my-book-buddy-gi34.onrender.com](https://my-book-buddy-gi34.onrender.com)**
 
- ⚠️ *Hosted on Render's free tier — the first load may take 30–60 seconds to spin up. Please be patient!*
+ ⚠️ *Hosted on Render's free tier — the loading may cause delay. Please be patient!*
 
 ---
 
 ## 🎥 Video Preview
+https://github.com/user-attachments/assets/e556dca1-0f77-4e9b-8334-f723fcd5c5b9
 
 > A short walkthrough of Book Buddy's core features — adding books, tracking progress, and using AI recommendations.
 
@@ -29,7 +30,7 @@
 Build an app for tracking reading progress.
 
 ### 👤 Users Can:
-- ✅ Add books with title, author, genre, and status *(reading, completed, wishlist)*
+- ✅ Add books with title, author, genre,images and status *(reading, completed, wishlist)*
 - ✅ Update reading progress
 - ✅ View reading stats *(e.g. % completed, books by genre)*
 - ✅ Add personal notes or ratings for completed books
