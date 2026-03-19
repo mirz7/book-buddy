@@ -77,7 +77,7 @@ export default function Recommendations() {
       <p className="text-secondary mb-6" style={{ fontSize: '1.1rem' }}>
         {hasBooks === false
           ? "You have zero books added, so we're recommending the world's top books for you to explore."
-          : "AI Recommend books based on intrested genre, summary,and past reading — discover titles you'll love…"}
+          : "AI Recommend books based on genre, summary, and past reading — discover titles you'll love…"}
       </p>
 
       {error && recommendations.length === 0 && (
