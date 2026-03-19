@@ -37,7 +37,8 @@ export default function AddBook() {
           title: book.title || '',
           author: book.author || '',
           genre: book.genre || '',
-          description: book.description || ''
+          description: book.description || '',
+          total_pages: book.total_pages || ''
         }));
       }
     }
@@ -65,6 +66,7 @@ export default function AddBook() {
           author: fallbackBook.author || '',
           genre: fallbackBook.genre || '',
           description: fallbackBook.description || '',
+          total_pages: fallbackBook.total_pages || '',
           isbn: isbnToFetch,
         }));
         setNotice('ISBN lookup issue — details from the recommendation have been pre-filled. You can edit them below.');
@@ -103,6 +105,15 @@ export default function AddBook() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(null);
+    setNotice(null);
+
+    // Explicit validation before submission
+    if (!formData.title || !formData.author || !formData.total_pages) {
+      setError('Title, Author, and Total Pages are required.');
+      return;
+    }
+
     setLoading(true);
     try {
       const data = new FormData();
@@ -186,8 +197,8 @@ export default function AddBook() {
               </div>
 
               <div className="form-group" style={{ margin: 0 }}>
-                <label className="form-label">Total Pages</label>
-                <input type="number" className="form-control" name="total_pages" value={formData.total_pages} onChange={handleChange} />
+                <label className="form-label">Total Pages *</label>
+                <input type="number" className="form-control" min="1" name="total_pages" value={formData.total_pages} onChange={handleChange} required />
               </div>
             </div>
 

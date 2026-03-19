@@ -96,12 +96,13 @@ def generate_recommendations(user):
             f"They highly rated: {liked_hint}. "
             "Return ONLY a valid JSON object with a single key 'recommendations' whose value "
             "is an array of exactly 5 objects. "
-            "Each object must have exactly these string keys: title, author, genre, isbn, description. "
+            "Each object must have these exact keys: title, author, genre, isbn, description, total_pages. "
             "Strict rules: "
             "(1) description = ONE sentence, no line breaks, no newline characters. "
             "(2) isbn = real 13-digit ISBN if known, otherwise empty string. "
             "(3) No double-quote characters inside any value — use single quotes if needed. "
             "(4) Every string value must open AND close on the same line. "
+            "(5) total_pages must be an integer representing the total number of pages of the book. "
             "Output nothing except the JSON object."
         )
 
