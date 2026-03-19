@@ -7,9 +7,8 @@
 ## 🌐 Hosted Link
 > **[https://my-book-buddy-gi34.onrender.com](https://my-book-buddy-gi34.onrender.com)**
 
-⚠️ *Hosted on Render's free tier — initial load may take a few seconds. Please be patient!*
+⚠️ *Hosted on Render's free tier — initial load may take a few seconds. Please be patient!*  
 🖥️ *Best viewed on desktop*
-
 
 ## 🎥 Video Preview
 https://github.com/user-attachments/assets/e556dca1-0f77-4e9b-8334-f723fcd5c5b9
