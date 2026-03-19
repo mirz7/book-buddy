@@ -33,11 +33,6 @@ Build an app for tracking reading progress.
 - ✅ View reading stats *(e.g. % completed, books by genre)*
 - ✅ Add personal notes or ratings for completed books
 
-### ⚙️ Tech Requirements:
-- ✅ **Frontend**: ReactJS *(form inputs, reading list view, stats)*
-- ✅ **Backend**: Python *(Django / FastAPI)*
-- ✅ **Database**: SQLite or PostgreSQL
-
 ### 🤖 Optional AI Feature:
 - ✅ Recommend books based on genre, summary, or past reading
 - ✅ Generate a short summary based on user notes
