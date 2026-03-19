@@ -9,6 +9,7 @@
 > **[https://my-book-buddy-gi34.onrender.com](https://my-book-buddy-gi34.onrender.com)**
 
  ⚠️ *Hosted on Render's free tier — the loading may cause delay. Please be patient!*
+ 🖥️ Best viewed on desktop
 
 
 ## 🎥 Video Preview
